@@ -1,7 +1,6 @@
 <div class="container-fluid">
-    <div ng-controller="LikedShop" ng-cloak class="ng-cloak">
-        <div ng-repeat="shop in shops" class="row">
-            <div class="col-sm-4">
+    <div ng-controller="LikedShop" ng-cloak class="row ng-cloak">
+        <div ng-repeat="shop in shops" class="col-sm-4">
                 <div class="card" style="width: 20rem;">
                     <img class="card-img-top" ng-src="{{shop.picture}}" alt="{{shop.name}}">
                     <div class="card-body">
@@ -9,7 +8,6 @@
                         <button ng-click="delete(shop)" class="btn btn-dark btn-sm">delete</button>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
