@@ -1,14 +1,12 @@
 <div class="container-fluid">
     <div ng-controller="LikedShop" ng-cloak class="ng-cloak">
-        <div ng-repeat="shop in shops">
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-block">
-                        <img ng-src="{{shop.picture}}" alt="{{shop.name}}">
-                        <div class="card-body" style="width: 20rem;">
-                            <h4 class="card-title">{{shop.name}}</h4>
-                            <button ng-click="delete(shop)" class="btn btn-success">delete</button>
-                        </div>
+        <div ng-repeat="shop in shops" class="row">
+            <div class="col-sm-4">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" ng-src="{{shop.picture}}" alt="{{shop.name}}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{shop.name}}</h4>
+                        <button ng-click="delete(shop)" class="btn btn-dark btn-sm">delete</button>
                     </div>
                 </div>
             </div>

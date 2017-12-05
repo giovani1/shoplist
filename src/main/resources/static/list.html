@@ -1,18 +1,14 @@
 <div class="container-fluid">
-    <div ng-controller="shopList" ng-cloak class="ng-cloak">
-        <div ng-repeat="shop in shops">
-            <div class="col-sm-2" style="padding-top:10px">
-                <div class="card">
-                    <div class="card-block">
-                        <img ng-src="{{shop.picture}}" alt="{{shop.name}}">
-                        <div class="card-body" style="width: 20rem;">
-                            <h4 class="card-title">{{shop.name}}</h4>
-                            <button ng-click="submit1(shop)" class="btn btn-success">Like</button>
-                            <button ng-click="submit2(shop)" class="btn btn-danger">Dislike</button>
-                        </div>
+    <div ng-controller="shopList" ng-cloak class="row ng-cloak">
+        <div ng-repeat="shop in shops" class="col-sm-4">
+                <div class="card" style="width: 20rem;">
+                    <img class="card-img-top" ng-src="{{shop.picture}}" alt="{{shop.name}}">
+                    <div class="card-body">
+                        <h4 class="card-title">{{shop.name}}</h4>
+                        <button ng-click="submit1(shop)" class="btn btn-success btn-sm">Like</button>
+                        <button ng-click="submit2(shop)" class="btn btn-danger btn-sm">Dislike</button>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
