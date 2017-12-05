@@ -18,12 +18,13 @@ import java.util.concurrent.TimeUnit;
 public class HomeController {
 
     private ShopsServiceImpl shopsServiceImpl;
-
+    //to inject the bean shopsServiceImpl in constructor
     @Autowired
     public HomeController(ShopsServiceImpl shopsServiceImpl) {
         this.shopsServiceImpl = shopsServiceImpl;
     }
 
+    //fetch all data,remove preferred and unwanted(under 2hours) shops from collection and send it to /ressource/
     @SuppressWarnings("unchecked")
     @RequestMapping("/")
     public Iterable<Shops> main(HttpSession httpSession){
@@ -52,6 +53,7 @@ public class HomeController {
         return shops;
     }
 
+    //add a shop to preferred list
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/like", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -63,6 +65,7 @@ public class HomeController {
         httpSession.setAttribute("LikedShops",likedShops);
     }
 
+    //add a shop to unwanted list
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/dislike", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -74,6 +77,7 @@ public class HomeController {
         httpSession.setAttribute("DisLikedShops",disLikedShops);
     }
 
+    //remove shops from preferred list
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/like", method = RequestMethod.DELETE, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -83,6 +87,7 @@ public class HomeController {
         httpSession.setAttribute("LikedShops",likedShops);
     }
 
+    //send all preferred list
     @SuppressWarnings("unchecked")
     @RequestMapping("/like")
     public List<Shops> preferred(HttpSession httpSession){

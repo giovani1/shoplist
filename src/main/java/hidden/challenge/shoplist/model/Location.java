@@ -1,7 +1,10 @@
 package hidden.challenge.shoplist.model;
 
 import java.util.Arrays;
-
+/**
+ *@author mohammed choubby
+ * param type , coordinates
+ */
 public class Location {
     private String type;
     private Double[] coordinates;

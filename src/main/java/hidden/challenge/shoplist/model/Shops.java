@@ -3,6 +3,12 @@ package hidden.challenge.shoplist.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ *@author mohammed choubby
+ * class that represent the collection shops in mongoDb
+ * param ID :id of object
+ * param picture, name, email, city, location : represent the states of object
+ */
 @Document(collection="shops")
 public class Shops {
     @Id

@@ -19,13 +19,12 @@ public class ShopsServiceImpl implements ShopsService {
     public ShopsServiceImpl(ShopsRepository shopsRepository) {
         this.shopsRepository = shopsRepository;
     }
-
+    //fetch  documents from nearest to farthest (0,0) andd Maetrics to switch to nearSphre instead of near because coordinates are point
+    // not longitude and latitude
     public List<Shops> list(){
-       //return shopsRepository.findAll();
         return shopsRepository.findByLocationNear(new Point(0,0),new Distance(Integer.MAX_VALUE, Metrics.KILOMETERS));
     }
-
-
+    //
     public Shops findOne(String id) {
         return shopsRepository.findOne(id);
     }

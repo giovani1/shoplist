@@ -3,6 +3,7 @@ var urlBase="http://localhost:8080/ressource";
 app.config(function($routeProvider) {
     $routeProvider
         .when("/", {
+            //load list.html in ngView at location '/'
             templateUrl : "list.html"
         })
         .when("/like", {
@@ -11,14 +12,10 @@ app.config(function($routeProvider) {
         redirectTo  : "/"
         })
 });
-app.controller('DislikedShop', function($scope,$http) {
-    $scope.submit = function () {
-        $http.post('/dislike',$scope.text);
-    };
 
-});
 app.controller('LikedShop', function($scope,$http) {
     $http.get(urlBase+"/like").then(function (response) {
+        //hold the list in scope
         $scope.shops = response.data;
     },function (error){
         console.log(error, 'can not get data.');
