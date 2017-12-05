@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/ressource")
@@ -27,16 +30,23 @@ public class HomeController {
         List<Shops> shops=shopsServiceImpl.list();
 
         List<Shops> likedShops=(List<Shops>) httpSession.getAttribute("LikedShops");
-        List<Shops> disLikedShops=(List<Shops>) httpSession.getAttribute("DisLikedShops");
+        Hashtable<Long,Shops> disLikedShops=(Hashtable<Long,Shops>) httpSession.getAttribute("DisLikedShops");
         if(likedShops==null){
             httpSession.setAttribute("LikedShops",new ArrayList<Shops>());
         }else{
             shops.removeAll(likedShops);
         }
         if(disLikedShops==null){
-            httpSession.setAttribute("DisLikedShops",new ArrayList<Shops>());
+            httpSession.setAttribute("DisLikedShops",new Hashtable<Long,Shops>());
         }else {
-            shops.removeAll(disLikedShops);
+            Long t=System.nanoTime();
+            for (Enumeration<Long> e = disLikedShops.keys(); e.hasMoreElements();){
+                Long ti=e.nextElement();
+                if(TimeUnit.NANOSECONDS.toHours(t-ti)>2){
+                    disLikedShops.remove(ti);
+                }
+            }
+            shops.removeAll(disLikedShops.values());
         }
 
         return shops;
@@ -49,7 +59,7 @@ public class HomeController {
         List<Shops> likedShops=(List<Shops>) httpSession.getAttribute("LikedShops");
         Shops s=shopsServiceImpl.findOne(id);
         if(!likedShops.contains(s))
-            System.out.println(likedShops.add(s));
+            likedShops.add(s);
         httpSession.setAttribute("LikedShops",likedShops);
     }
 
@@ -57,10 +67,10 @@ public class HomeController {
     @RequestMapping(value = "/dislike", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void addToDislike(@RequestBody String id,HttpSession httpSession){
-        List<Shops> disLikedShops=(List<Shops>) httpSession.getAttribute("DisLikedShops");
+        Hashtable<Long,Shops> disLikedShops=(Hashtable<Long,Shops>) httpSession.getAttribute("DisLikedShops");
         Shops s=shopsServiceImpl.findOne(id);
         if(!disLikedShops.contains(s))
-            System.out.println(disLikedShops.add(s));
+            disLikedShops.put(System.nanoTime(),s);
         httpSession.setAttribute("DisLikedShops",disLikedShops);
     }
 
@@ -69,7 +79,7 @@ public class HomeController {
     @ResponseStatus(HttpStatus.OK)
     public void removeFromPreferred(@RequestBody String id,HttpSession httpSession){
         List<Shops> likedShops=(List<Shops>) httpSession.getAttribute("LikedShops");
-        System.out.println(likedShops.remove(shopsServiceImpl.findOne(id)));
+        likedShops.remove(shopsServiceImpl.findOne(id));
         httpSession.setAttribute("LikedShops",likedShops);
     }
 
